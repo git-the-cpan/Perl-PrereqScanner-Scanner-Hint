@@ -84,8 +84,8 @@
 #pod
 #pod =head2 Hints
 #pod
-#pod A hint is a comment starting with I<one hash>, followed by C<REQUIRE> keyword, I<colon>, module
-#pod name, and optional version range and comment, e. g.:
+#pod A hint is a comment starting with I<one hash>, followed by C<REQUIRE> keyword, I<colon>, I<module
+#pod name>, and optional I<version range> and I<comment>, e. g.:
 #pod
 #pod     # REQUIRE: Assa >= 1.2, != 1.5 # 1.5 has a nasty bug
 #pod
@@ -150,6 +150,12 @@
 #pod     [AutoPrereqs]
 #pod         extra_scanners = Hint
 #pod
+#pod =head1 EXAMPLES
+#pod
+#pod All the examples below assume using C<Dist::Zilla> with C<AutoPrereqs> plugin, and enabled
+#pod C<Scanner::Hint>, as shown in L<< /"Using C<Scanner::Hint> with C<Dist::Zilla> and C<AutoPrereqs>"
+#pod >> section.
+#pod
 #pod =example C<autodie>
 #pod
 #pod If pragma C<autodie> is used with C<':system'> or C<':all'> argument, e. g.:
@@ -158,10 +164,10 @@
 #pod
 #pod C<autodie> loads C<IPC::System::Simple> module. However, C<autodie>'s F<META.json> says C<autodie>
 #pod I<recommends> C<IPC::System::Simple>, but not I<requires> it. Since C<IPC::System::Simple> is not
-#pod required, CPAN client does not insist on installing C<IPC::System::Simple>. Thus, code may fail due
-#pod to missed C<IPC::System::Simple>.
+#pod required, a CPAN client (either C<cpan>, or C<cpanp>, or C<cpanm>) does not insist on installing
+#pod C<IPC::System::Simple>. Thus, code may fail due to missed C<IPC::System::Simple>.
 #pod
-#pod A hint allows to avoid this trouble:
+#pod Using a hint avoids this trouble:
 #pod
 #pod     use autodie ':all'; # REQUIRE: IPC::System::Simple
 #pod
@@ -234,9 +240,10 @@
 #pod
 #pod =caveat Keyword Spelling
 #pod
-#pod Be careful in writing "REQUIRE" keyword. Mistyped keywords are not recognized and silently ignored.
+#pod Be careful when writing "REQUIRE" keyword. Mistyped keywords are not recognized and silently
+#pod ignored.
 #pod
-#pod =caveat File name
+#pod =caveat File Name in Error Messages
 #pod
 #pod C<Scanner::Hint> does its best to report error location properly. However, when using with
 #pod C<Dist::Zilla> and C<AutoPrereqs>, error in any file is reported as error in C<(*UNKNOWN*)> file,
@@ -249,8 +256,9 @@
 #pod does not pass file name to a C<PPI::Document> object via C<#line> directive. See:
 #pod
 #pod =for :list
-#pod * L<< [Feature request] filename attribute to PPI::Document->new|https://github.com/adamkennedy/PPI/issues/180 >>
-#pod * L<Dist::Zilla::Role::PPI: lack of filename|https://github.com/rjbs/Dist-Zilla/issues/499>
+#pod *   L<< [Feature request] filename attribute to
+#pod     PPI::Document->new|https://github.com/adamkennedy/PPI/issues/180 >>
+#pod *   L<Dist::Zilla::Role::PPI: lack of filename|https://github.com/rjbs/Dist-Zilla/issues/499>
 #pod
 #pod =caveat Extended Regular Expressions
 #pod
@@ -399,8 +407,7 @@ Perl::PrereqScanner::Scanner::Hint::Manual - C<Scanner::Hint> user manual
 
 =head1 VERSION
 
-Version v0.0.0_01, released on 2015-10-21 23:22 UTC.
-This is a B<trial release>.
+Version v0.1.0, released on 2015-10-22 11:14 UTC.
 
 =head1 WHAT?
 
@@ -462,8 +469,8 @@ searches for I<hints> leaved by the programmer.
 
 =head2 Hints
 
-A hint is a comment starting with I<one hash>, followed by C<REQUIRE> keyword, I<colon>, module
-name, and optional version range and comment, e. g.:
+A hint is a comment starting with I<one hash>, followed by C<REQUIRE> keyword, I<colon>, I<module
+name>, and optional I<version range> and I<comment>, e. g.:
 
     # REQUIRE: Assa >= 1.2, != 1.5 # 1.5 has a nasty bug
 
@@ -530,6 +537,10 @@ option can be used for enabling C<Scanner::Hint> in your F<dist.ini>:
 
 =head1 EXAMPLES
 
+All the examples below assume using C<Dist::Zilla> with C<AutoPrereqs> plugin, and enabled
+C<Scanner::Hint>, as shown in L<< /"Using C<Scanner::Hint> with C<Dist::Zilla> and C<AutoPrereqs>"
+>> section.
+
 =head2 C<autodie>
 
 If pragma C<autodie> is used with C<':system'> or C<':all'> argument, e. g.:
@@ -538,10 +549,10 @@ If pragma C<autodie> is used with C<':system'> or C<':all'> argument, e. g.:
 
 C<autodie> loads C<IPC::System::Simple> module. However, C<autodie>'s F<META.json> says C<autodie>
 I<recommends> C<IPC::System::Simple>, but not I<requires> it. Since C<IPC::System::Simple> is not
-required, CPAN client does not insist on installing C<IPC::System::Simple>. Thus, code may fail due
-to missed C<IPC::System::Simple>.
+required, a CPAN client (either C<cpan>, or C<cpanp>, or C<cpanm>) does not insist on installing
+C<IPC::System::Simple>. Thus, code may fail due to missed C<IPC::System::Simple>.
 
-A hint allows to avoid this trouble:
+Using a hint avoids this trouble:
 
     use autodie ':all'; # REQUIRE: IPC::System::Simple
 
@@ -636,9 +647,10 @@ requiring all the modules is a right thing to do.
 
 =head2 Keyword Spelling
 
-Be careful in writing "REQUIRE" keyword. Mistyped keywords are not recognized and silently ignored.
+Be careful when writing "REQUIRE" keyword. Mistyped keywords are not recognized and silently
+ignored.
 
-=head2 File name
+=head2 File Name in Error Messages
 
 C<Scanner::Hint> does its best to report error location properly. However, when using with
 C<Dist::Zilla> and C<AutoPrereqs>, error in any file is reported as error in C<(*UNKNOWN*)> file,

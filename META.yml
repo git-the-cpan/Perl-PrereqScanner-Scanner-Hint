@@ -33,7 +33,7 @@ name: Perl-PrereqScanner-Scanner-Hint
 provides:
   Perl::PrereqScanner::Scanner::Hint:
     file: lib/Perl/PrereqScanner/Scanner/Hint.pm
-    version: v0.0.0_1
+    version: v0.1.0
 requires:
   Module::Runtime: '0'
   Moose: '0'
@@ -41,9 +41,10 @@ requires:
   Try::Tiny: '0'
   namespace::autoclean: '0'
   perl: '5.006'
+  version: '0.77'
 resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Perl-PrereqScanner-Scanner-Hint
   homepage: https://metacpan.org/release/Perl-PrereqScanner-Scanner-Hint
   license: http://www.gnu.org/licenses/gpl-3.0.txt
   repository: https://vandebugger.fedorapeople.org/hg/perl-Perl-PrereqScanner-Scanner-Hint
-version: v0.0.0_01
+version: v0.1.0

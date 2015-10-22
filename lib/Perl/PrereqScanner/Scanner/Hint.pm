@@ -45,17 +45,26 @@
 #pod
 #pod =head1 DESCRIPTION
 #pod
-#pod TODO
+#pod This is a trivial scanner which utilizes power of C<Perl::PrereqScanner> and C<PPI>.
+#pod
+#pod =head1 SEE ALSO
+#pod
+#pod =for :list
+#pod *   L<Perl::PrereqScanner>
+#pod *   L<PPI>
 #pod
 #pod =cut
+
+# --------------------------------------------------------------------------------------------------
 
 package Perl::PrereqScanner::Scanner::Hint;
 
 use Moose;
 use namespace::autoclean;
+use version 0.77;
 
 # ABSTRACT: Plugin for C<Perl::PrereqScanner> looking for C<# REQUIRE:> comments
-our $VERSION = 'v0.0.0_01'; # TRIAL VERSION
+our $VERSION = 'v0.1.0'; # VERSION
 
 use Module::Runtime qw{ is_module_name };
 use Try::Tiny;
@@ -67,7 +76,6 @@ with 'Perl::PrereqScanner::Scanner';
 my $error = sub {
     my ( $what, $elem ) = @_;
     my ( undef, undef, undef, $line, $file ) = @{ $elem->location };
-    chomp( $what );
     if ( not defined( $file ) ) {
         $file = '(*UNKNOWN*)';
     };
@@ -78,7 +86,14 @@ my $error = sub {
 
 #pod =method scan_for_prereqs
 #pod
-#pod TODO
+#pod     my $doc = PPI::Document->new( ... );
+#pod     my $req = CPAN::Meta::Requirements->new;
+#pod     $self->scan_for_prereqs( $doc, $req );
+#pod
+#pod The method scans document C<$doc>, which is expected to be an objects of C<PPI::Document> class.
+#pod The methods looks for comments starting with C<# REQUIRE:>, and adds found requirements to C<$req>,
+#pod by calling C<< $req->add_string+requirement >>. C<$req> is expected to be an object of
+#pod C<CPAN::Meta::Requirements> class.
 #pod
 #pod =cut
 
@@ -94,7 +109,8 @@ sub scan_for_prereqs {
                 try {
                     $req->add_string_requirement( $mod, $ver );
                 } catch {
-                    my $ex = $_;
+                    my $ex = "$_";
+                    chomp( $ex );
                     $error->( "$ex", $comment );
                 };
             } else {
@@ -139,8 +155,7 @@ Perl::PrereqScanner::Scanner::Hint - Plugin for C<Perl::PrereqScanner> looking f
 
 =head1 VERSION
 
-Version v0.0.0_01, released on 2015-10-21 23:22 UTC.
-This is a B<trial release>.
+Version v0.1.0, released on 2015-10-22 11:14 UTC.
 
 =head1 WHAT?
 
@@ -164,15 +179,36 @@ in the F<README>.
 
 =head1 DESCRIPTION
 
-TODO
+This is a trivial scanner which utilizes power of C<Perl::PrereqScanner> and C<PPI>.
 
 =head1 OBJECT METHODS
 
 =head2 scan_for_prereqs
 
-TODO
+    my $doc = PPI::Document->new( ... );
+    my $req = CPAN::Meta::Requirements->new;
+    $self->scan_for_prereqs( $doc, $req );
+
+The method scans document C<$doc>, which is expected to be an objects of C<PPI::Document> class.
+The methods looks for comments starting with C<# REQUIRE:>, and adds found requirements to C<$req>,
+by calling C<< $req->add_string+requirement >>. C<$req> is expected to be an object of
+C<CPAN::Meta::Requirements> class.
 
 =for test_synopsis my $path;
+
+=head1 SEE ALSO
+
+=over 4
+
+=item *
+
+L<Perl::PrereqScanner>
+
+=item *
+
+L<PPI>
+
+=back
 
 =head1 AUTHOR
 

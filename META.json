@@ -62,7 +62,8 @@
             "Perl::PrereqScanner::Scanner" : "0",
             "Try::Tiny" : "0",
             "namespace::autoclean" : "0",
-            "perl" : "5.006"
+            "perl" : "5.006",
+            "version" : "0.77"
          }
       },
       "test" : {
@@ -90,10 +91,10 @@
    "provides" : {
       "Perl::PrereqScanner::Scanner::Hint" : {
          "file" : "lib/Perl/PrereqScanner/Scanner/Hint.pm",
-         "version" : "v0.0.0_1"
+         "version" : "v0.1.0"
       }
    },
-   "release_status" : "testing",
+   "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
          "mailto" : "mailto:bug-Perl-PrereqScanner-Scanner-Hint@rt.cpan.org",
@@ -108,6 +109,6 @@
          "url" : "https://vandebugger.fedorapeople.org/hg/perl-Perl-PrereqScanner-Scanner-Hint"
       }
    },
-   "version" : "v0.0.0_01"
+   "version" : "v0.1.0"
 }
 
